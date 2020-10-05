@@ -54,3 +54,31 @@ Commit 3.
 ```
 2. Так же вместо value можно использовать ref как в Commit 2
 
+Commit 4.
+--------
+Добавляем дому стены.
+
+1. Создаем интерфейс Material
+
+1.1. Класс кирпич Brick
+
+1.3. Класс дерево Wood
+
+1.4. Дому добавляем стену wall
+
+1.5. Добаляем для дома метод для стрительства стен buildWall.
+
+1.6. В applicationContext.xml добавляем материалы для стен
+```
+    <bean id="brickBean"
+          class="ru.specialist.spring.Brick">
+    </bean>
+    <bean id="woodBean"
+          class="ru.specialist.spring.Wood">
+    </bean>
+```
+1.7 И задаем через `ref` материал стен
+```
+<property name="wall" ref="brickBean"/>
+```
+

@@ -10,10 +10,17 @@
     <bean id="windowBean"
           class="ru.specialist.spring.PlasticWindow">
     </bean>
+    <bean id="brickBean"
+          class="ru.specialist.spring.Brick">
+    </bean>
+    <bean id="woodBean"
+          class="ru.specialist.spring.Wood">
+    </bean>
     <bean id="houseBean"
           class="ru.specialist.spring.House">
         <constructor-arg ref="windowBean"/>
 <!--        <constructor-arg value="3"/>-->
-        <property name="height" value="2" />
+        <property name="height" value="5" />
+        <property name="wall" ref="brickBean"/>
     </bean>
 </beans>
