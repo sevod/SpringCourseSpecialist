@@ -2,8 +2,19 @@ package ru.specialist.spring;
 
 public class House {
     private Window window;
-    public House(Window window){
+    private int height;
+
+    public House(Window window, int height){
         this.window = window;
+        this.height = height;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
     }
 
     public void view(){

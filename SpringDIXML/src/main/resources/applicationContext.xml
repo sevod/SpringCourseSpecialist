@@ -10,4 +10,9 @@
     <bean id="windowBean"
           class="ru.specialist.spring.PlasticWindow">
     </bean>
+    <bean id="houseBean"
+          class="ru.specialist.spring.House">
+        <constructor-arg ref="windowBean"/>
+        <constructor-arg value="3"/>
+    </bean>
 </beans>

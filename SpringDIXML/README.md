@@ -5,7 +5,7 @@ Commit 1.
 ---------
 1. В pom.xml вставляем Dependencies.
 2. Создаем окружение из классов Window, Wood... Plastic..
-3. Создаем бин 
+3. Создаем бин в applicationContext.xml
 ```    
     <bean id="windowBean"
           class="ru.specialist.spring.PlasticWindow">
@@ -23,4 +23,18 @@ Commit 1.
 
 Commit 2.
 -----------
-Усложним предыдущую программу
+Усложним предыдущую программу. Будем создавать дом в applicationContext.xml и там внедрять окно.
+
+1. В applicationContext.xml добавляем Home.
+```
+    <bean id="houseBean"
+          class="ru.specialist.spring.House">
+        <constructor-arg ref="windowBean"/>
+        <constructor-arg value="3"/>
+    </bean>
+```
+1.1 `<constructor-arg ref="windowBean"/>` ссылается на другой бин в этом файле. этот бин должен быть выше.
+1.2 В App.java теперь сразу вызываем House 
+`House house = context.getBean("houseBean", House.class);`
+
+
