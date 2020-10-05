@@ -4,9 +4,9 @@ public class House {
     private Window window;
     private int height;
 
-    public House(Window window, int height){
+    public House(Window window){
         this.window = window;
-        this.height = height;
+        //this.height = height;
     }
 
     public int getHeight() {

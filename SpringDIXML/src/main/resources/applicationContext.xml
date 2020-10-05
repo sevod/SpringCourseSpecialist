@@ -13,6 +13,7 @@
     <bean id="houseBean"
           class="ru.specialist.spring.House">
         <constructor-arg ref="windowBean"/>
-        <constructor-arg value="3"/>
+<!--        <constructor-arg value="3"/>-->
+        <property name="height" value="2" />
     </bean>
 </beans>
