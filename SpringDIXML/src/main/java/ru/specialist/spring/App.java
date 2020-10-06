@@ -14,6 +14,9 @@ public class App {
 
         System.out.printf("House height: %d\n",house.getHeight());
 
+        MainWindow mainWindow = context.getBean(MainWindow.class);
+        mainWindow.show();
+
         context.close();
     }
 }
