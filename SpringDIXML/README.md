@@ -164,3 +164,52 @@ Commit 8
 </property>
 ```
 Эта вложенная компонента не видна в других компонентах
+
+Commit 9
+------------------
+
+Упрощаем как задавать данные (property) через пространство имен (nameSpace) 
+
+1. возвращаем назад вложенную компоненту.
+2. в заголовок добавляем `xmlns:p="http://www.springframework.org/schema/p"`
+3. теперь мы можем писать так `p:height="4"`
+
+Commit 10
+-----------------
+
+Внедрение колекций
+
+1.1. Добавляем двери. Door, MetalDoor, WoodDoor
+1.2. Добавляем двери в Home `private Collection<Door> doors;` и метод installDoors(), который отображает установленные двери.
+1.3. В applicationContext.xml создаем два бина для дверей
+```
+   <bean id="outDoor"
+          class="ru.specialist.spring.MetalDoor">
+    </bean>
+
+    <bean id="innerDoor"
+          class="ru.specialist.spring.WoodDoor"
+          scope="prototype">
+    </bean> 
+```
+1.4 Добавляем в houseBean коллекцию дверей
+```
+        <property name="doors">
+            <list>
+                <ref bean="outDoor"/>
+                <ref bean="innerDoor"/>
+            </list>
+        </property>
+```
+1.5 В App.java добавляем уставновку дверей и проверяем
+`house.installDoors();`
+
+В контексте можно использовать аналоги коллекций
+
+`<list>` список значений допускающий повторения
+
+`<set>` множество, не допускающий повторения
+
+`<map>` ассоативные коллекции
+
+`<props>` аналог map но для строк, можно делать ссылку

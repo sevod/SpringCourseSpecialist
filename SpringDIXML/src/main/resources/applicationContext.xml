@@ -1,11 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:p="http://www.springframework.org/schema/p"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
     http://www.springframework.org/schema/beans/spring-beans.xsd
     http://www.springframework.org/schema/context
     http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <bean id="outDoor"
+          class="ru.specialist.spring.MetalDoor">
+    </bean>
+
+    <bean id="innerDoor"
+          class="ru.specialist.spring.WoodDoor"
+          scope="prototype">
+    </bean>
 
     <bean id="windowBean"
           class="ru.specialist.spring.PlasticWindow">
@@ -20,20 +30,26 @@
           scope="prototype">
     </bean>
     <bean id="houseBean"
-          class="ru.specialist.spring.House">
+          class="ru.specialist.spring.House"
+          p:height="4">
         <constructor-arg ref="windowBean"/>
-        <!-- <constructor-arg value="3"/>-->
-        <property name="height" value="5"/>
-<!--        <property name="wall" ref="brickBean"/>-->
-        <property name="wall" >
-            <bean class="ru.specialist.spring.Brick"/>
+        <!-- <constructor-arg value="3"/>
+        <property name="height" value="5"/>-->
+
+        <property name="wall" ref="brickBean"/>
+        <!--        <property name="wall" >
+                   <bean class="ru.specialist.spring.Brick"/>
+               </property>-->
+        <property name="doors">
+            <list>
+                <ref bean="outDoor"/>
+                <ref bean="innerDoor"/>
+            </list>
         </property>
     </bean>
     <bean id="mainWindowBean"
           class="ru.specialist.spring.MainWindow"
           factory-method="getInstance"
-          init-method="openConnection"
-
-    >
+          init-method="openConnection">
     </bean>
 </beans>

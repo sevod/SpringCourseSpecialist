@@ -10,6 +10,7 @@ public class App {
         House house = context.getBean("houseBean", House.class);
 
         house.buildWall();
+        house.installDoors();
         house.view();
 
         System.out.printf("House height: %d\n",house.getHeight());
