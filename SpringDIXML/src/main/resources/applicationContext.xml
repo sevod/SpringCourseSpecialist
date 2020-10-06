@@ -41,10 +41,16 @@
                    <bean class="ru.specialist.spring.Brick"/>
                </property>-->
         <property name="doors">
+        <!--
             <list>
                 <ref bean="outDoor"/>
                 <ref bean="innerDoor"/>
             </list>
+         -->
+            <map>
+                <entry key="A" value-ref="outDoor"/>
+                <entry key="B" value-ref="innerDoor"/>
+            </map>
         </property>
     </bean>
     <bean id="mainWindowBean"

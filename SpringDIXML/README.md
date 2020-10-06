@@ -213,3 +213,25 @@ Commit 10
 `<map>` ассоативные коллекции
 
 `<props>` аналог map но для строк, можно делать ссылку
+
+Commit 11.
+------------------
+Усложним предыдущий пример. Сделаем что бы у дврей были ключи. Задавать это будем парами ключ - дверь, с помощью map
+
+1.1. Меняем в House двери на map `private Map<String, Door> doors;`
+1.2. Меняем метод
+```
+    public void installDoors(){
+        for (Map.Entry<String, Door> e: doors.entrySet()) {
+            System.out.printf("Ключ %s. ", e.getKey());
+            e.getValue().install();
+        }
+    }
+```
+1.3. Меняем в applicationContext.xml нашу коллекцию дверей на map
+```
+<map>
+    <entry key="A" value-ref="outDoor"/>
+    <entry key="B" value-ref="innerDoor"/>
+</map>
+```
