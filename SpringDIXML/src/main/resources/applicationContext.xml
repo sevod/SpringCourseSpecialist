@@ -27,6 +27,7 @@
           class="ru.specialist.spring.MainWindow"
           factory-method="getInstance"
           init-method="openConnection"
+          destroy-method="closeConnection"
     >
     </bean>
 </beans>

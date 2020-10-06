@@ -18,4 +18,8 @@ public class MainWindow {
     public void openConnection(){
         System.out.println("Main window open connection");
     }
+
+    public void closeConnection(){
+        System.out.println("Main window close connection");
+    }
 }

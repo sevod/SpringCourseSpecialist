@@ -110,3 +110,15 @@ MainWindow mainWindow = context.getBean(MainWindow.class);
 В итого мы сделали:
 `Если какие-либо из компонентов реализуют интерфейс InitializingBean, Spring вызывает их методы afterPropertiesSet(). Аналогично, если компонент был объявлен с атрибутом  init-method, вызывается указанный метод инициализации.`
 
+Commit 6
+-----------------
+Будем использовать DisposableBean() метод destroy() (это из одного этапа жизни компоненты) который будет вызываться при удалении компоненты
+
+1.1. В MainWindow добавляем метод closeConnection()
+
+1.2 В applicationContext.xml добавляем в компоененту 
+
+`destroy-method="closeConnection"`
+
+1.3. проверяем. Метод closeConnection вызывается последним.
+
