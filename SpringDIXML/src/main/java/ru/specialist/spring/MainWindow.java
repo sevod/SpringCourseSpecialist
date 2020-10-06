@@ -1,6 +1,9 @@
 package ru.specialist.spring;
 
-public class MainWindow {
+import org.springframework.beans.factory.DisposableBean;
+import org.springframework.beans.factory.InitializingBean;
+
+public class MainWindow implements InitializingBean, DisposableBean {
     private MainWindow(){}
 
     private static class MainWindowHolder{
@@ -21,5 +24,13 @@ public class MainWindow {
 
     public void closeConnection(){
         System.out.println("Main window close connection");
+    }
+
+    public void afterPropertiesSet() throws Exception {
+        openConnection();
+    }
+
+    public void destroy() throws Exception {
+        closeConnection();
     }
 }
