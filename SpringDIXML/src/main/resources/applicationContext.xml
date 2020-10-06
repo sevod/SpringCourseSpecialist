@@ -11,23 +11,29 @@
           class="ru.specialist.spring.PlasticWindow">
     </bean>
     <bean id="brickBean"
-          class="ru.specialist.spring.Brick">
+          class="ru.specialist.spring.Brick"
+          scope="prototype"
+    >
     </bean>
     <bean id="woodBean"
-          class="ru.specialist.spring.Wood">
+          class="ru.specialist.spring.Wood"
+          scope="prototype">
     </bean>
     <bean id="houseBean"
           class="ru.specialist.spring.House">
         <constructor-arg ref="windowBean"/>
         <!-- <constructor-arg value="3"/>-->
         <property name="height" value="5"/>
-        <property name="wall" ref="brickBean"/>
+<!--        <property name="wall" ref="brickBean"/>-->
+        <property name="wall" >
+            <bean class="ru.specialist.spring.Brick"/>
+        </property>
     </bean>
     <bean id="mainWindowBean"
           class="ru.specialist.spring.MainWindow"
           factory-method="getInstance"
           init-method="openConnection"
-          destroy-method="closeConnection"
+
     >
     </bean>
 </beans>
