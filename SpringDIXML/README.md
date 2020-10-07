@@ -235,3 +235,85 @@ Commit 11.
     <entry key="B" value-ref="innerDoor"/>
 </map>
 ```
+
+Commit 12. SpEL спринг экспрешен ленгвич
+----------
+SpEL работа с коллекциями. Будет коллекция городов с информацией по населению.
+
+0.1 Эквиваленты операторов сравнения: < lt / > gt / <= le / >= lt / == eq / and / or / ! not
+0.2 Тернарный оператор (условия) ? (выполняется) : (невыполняется)
+0.3 Проверка на регулярное выражение  `"#{windowBean.str matches '(тут регулярное выражение)'}"` 
+
+1.1. Добавляем класс City
+1.2. В applicationContext.xml подключим префикс util и schemaLocation для него 
+1.3. опередлим коллекцию в applicationContext.xml
+```
+<util:list id="cities">
+        <bean class="ru.specialist.spring.City" p:name="Chicago" p:state="IL" p:population="2853114"/>
+        <bean class="ru.specialist.spring.City" p:name="Atlanta" p:state="GA" p:population="323"/>
+        <bean class="ru.specialist.spring.City" p:name="Dallas" p:state="TX" p:population="45234324"/>
+        <bean class="ru.specialist.spring.City" p:name="Houston" p:state="TX" p:population="53453d"/>
+        <bean class="ru.specialist.spring.City" p:name="Odessa" p:state="TX" p:population="623333"/>
+</util:list>
+```
+1.4.1. Если нам нужно обратиться к какому то конктретному элементу коллекции внутри бина можно сделать так
+
+`<property name="chosenCity" value="#{cities[2]}">`
+
+Это был пример, код не работает.
+
+1.4.2. Если нужно получить рендомный город
+
+`<property name="chosenCity" value="#{cities[T(java.lang.Math).random()*cities.size()]}"/>`
+
+1.4.3. Это если бы было map коллекция
+
+`<property name="chosenCity" value="#{cities['Dallas']}"/>`
+
+1.4.4. С помощью такой конструкции и файла jdbc.properties. Мы получаем бин в котором будет коллекция из файла.
+
+`<util:properties id="jdbcSettings" location="classpath:jdbc.properties"/>`
+
+1.4.5. Две встроенных коллекции `systemEnvironment` / `systemProperties`
+
+ `<entry key="#{systemEnvironment['JAVA_HOME']}" value-ref="innerDoor"/>`
+ 
+  `<entry key="#{systemProperties['application.name']}" value-ref="innerDoor"/>`
+  
+1.4.6. С помощью выражения. Мы получим не один город, а коллекцию городов где `population > 100000`.
+
+`<property name="bigCities" value="#{cities.?[population gt 100000]}"/>`  
+
+1.4.7. С помощью выражения. Мы получим один город. '^' означает первый, '$' означает последний
+```
+ <property name="firstBigCity" value="#{cities.^[population gt 100000]}"/>
+ <property name="lastBigCity" value="#{cities.$[population gt 100000]}"/>
+```
+
+1.4.8. На выходе будет строковая коллеция из поля `name`
+
+`<property name="cityNames" value="#{cities.![name]}"/>`
+
+1.4.9. На выходе будет строковая коллеция из полей `name, state`
+
+`<property name="cityNames" value="#{cities.![name + ', ' + state]}"/>`
+
+1.4.9. Коллекция городов удволетворяющих условию
+
+`<property name="cityNames" value="#{cities.?[population gt 100000].![name + ', ' + state]}"/>`
+
+  
+2. Продолжаем работу со SpEL. Сделаем так, что бы ключ сам подставлялся в зависимости от двери.
+
+2.1. Создаем класс KeySelector
+
+2.2. Создаем bean `<bean id="keySelector" class="ru.specialist.spring.KeySelector"/>`
+
+2.3. Вставляем этот бин/класс для получения ключа для двери `<entry key="#{keySelector.getKey(outDoor)}" value-ref="outDoor"/>`
+
+2.4. Варинат с upperCase с использованием '?' что бы обойти null если будет
+
+`<entry key="#{keySelector.getKey(outDoor)?.toUpperCase()}" value-ref="outDoor"/>`
+  
+ 
+ 

@@ -2,11 +2,14 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:p="http://www.springframework.org/schema/p"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
        xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
     http://www.springframework.org/schema/beans/spring-beans.xsd
     http://www.springframework.org/schema/context
-    http://www.springframework.org/schema/context/spring-context.xsd">
+    http://www.springframework.org/schema/context/spring-context.xsd
+    http://www.springframework.org/schema/util
+    http://www.springframework.org/schema/util/spring-util.xsd">
 
     <bean id="outDoor"
           class="ru.specialist.spring.MetalDoor">
@@ -29,6 +32,7 @@
           class="ru.specialist.spring.Wood"
           scope="prototype">
     </bean>
+    <bean id="keySelector" class="ru.specialist.spring.KeySelector"/>
     <bean id="houseBean"
           class="ru.specialist.spring.House"
           p:height="4">
@@ -48,8 +52,10 @@
             </list>
          -->
             <map>
-                <entry key="A" value-ref="outDoor"/>
-                <entry key="B" value-ref="innerDoor"/>
+                <entry key="#{keySelector.getKey(outDoor)?.toUpperCase()}" value-ref="outDoor"/>
+                <entry key="#{keySelector.getKey(innerDoor)}" value-ref="innerDoor"/>
+                <entry key="#{systemEnvironment['JAVA_HOME']}" value-ref="innerDoor"/>
+                <entry key="#{systemProperties['application.name']}" value-ref="innerDoor"/>
             </map>
         </property>
     </bean>
@@ -58,4 +64,32 @@
           factory-method="getInstance"
           init-method="openConnection">
     </bean>
+
+
+
+    <util:list id="cities">
+        <bean class="ru.specialist.spring.City" p:name="Chicago" p:state="IL" p:population="2853114"/>
+        <bean class="ru.specialist.spring.City" p:name="Atlanta" p:state="GA" p:population="323"/>
+        <bean class="ru.specialist.spring.City" p:name="Dallas" p:state="TX" p:population="45234324"/>
+        <bean class="ru.specialist.spring.City" p:name="Houston" p:state="TX" p:population="53453d"/>
+        <bean class="ru.specialist.spring.City" p:name="Odessa" p:state="TX" p:population="623333"/>
+    </util:list>
+<!-- Это не работает, потому что вне бина
+    <property name="chosenCity" value="#{cities[2]}"/>
+    <property name="chosenCity" value="#{cities[T(java.lang.Math).random()*cities.size()]}"/>
+    <property name="chosenCity" value="#{cities['Dallas']}"/> Это если бы было map выше
+    -->
+<!--
+    <property name="bigCities" value="#{cities.?[population gt 100000]}"/>
+    <property name="firstBigCity" value="#{cities.^[population gt 100000]}"/>
+    <property name="lastBigCity" value="#{cities.$[population gt 100000]}"/>
+    <property name="cityNames" value="#{cities.![name]}"/>
+    <property name="cityNames" value="#{cities.![name + ', ' + state]}"/>
+    <property name="cityNames" value="#{cities.?[population gt 100000].![name + ', ' + state]}"/>
+
+    -->
+
+    <util:properties id="jdbcSettings" location="classpath:jdbc.properties"/>
+
+
 </beans>
