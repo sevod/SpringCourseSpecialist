@@ -12,6 +12,9 @@ public class House {
     //private Door[] doors;
     private Map<String, Door> doors;
 
+    public House() {
+    }
+
     public House(Window window) {
         this.window = window;
         //this.height = height;

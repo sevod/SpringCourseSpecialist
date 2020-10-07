@@ -11,6 +11,9 @@
     http://www.springframework.org/schema/util
     http://www.springframework.org/schema/util/spring-util.xsd">
 
+
+    <bean id="wall" class="ru.specialist.spring.Brick" scope="prototype" primary="true"/>
+
     <bean id="outDoor"
           class="ru.specialist.spring.MetalDoor">
     </bean>
@@ -21,22 +24,27 @@
     </bean>
 
     <bean id="windowBean"
-          class="ru.specialist.spring.PlasticWindow">
+          class="ru.specialist.spring.WoodFrameWindow">
     </bean>
     <bean id="brickBean"
           class="ru.specialist.spring.Brick"
           scope="prototype"
+          autowire-candidate="false"
     >
     </bean>
     <bean id="woodBean"
           class="ru.specialist.spring.Wood"
-          scope="prototype">
+          scope="prototype"
+          autowire-candidate="false"
+    >
     </bean>
+
     <bean id="keySelector" class="ru.specialist.spring.KeySelector"/>
+
     <bean id="houseBean"
           class="ru.specialist.spring.House"
-          p:height="4">
-        <constructor-arg ref="windowBean"/>
+          p:height="4"  autowire="constructor">
+<!--        <constructor-arg ref="windowBean"/>-->
         <!-- <constructor-arg value="3"/>
         <property name="height" value="5"/>-->
 
@@ -59,6 +67,9 @@
             </map>
         </property>
     </bean>
+
+    <bean id="houseBean2" class="ru.specialist.spring.House" parent="houseBean" />
+
     <bean id="mainWindowBean"
           class="ru.specialist.spring.MainWindow"
           factory-method="getInstance"
