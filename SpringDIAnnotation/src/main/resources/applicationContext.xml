@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd
+    http://www.springframework.org/schema/util
+    http://www.springframework.org/schema/util/spring-util.xsd">
+
+    <context:component-scan base-package="ru.specialist.springAnnotation">
+<!--        <context:include-filter type="assignable" expression="ru.specialist.springAnnotation.Window"/>-->
+<!--        <context:exclude-filter type="assignable" expression="ru.specialist.springAnnotation.Brick"/>-->
+    </context:component-scan>
+<!--    <context:annotation-config/>-->
+<!--
+    <bean id="wall" class="ru.specialist.springAnnotation.Brick" scope="prototype" primary="true"/>
+
+    <bean id="outDoor"
+          class="ru.specialist.springAnnotation.MetalDoor">
+    </bean>
+
+    <bean id="innerDoor"
+          class="ru.specialist.springAnnotation.WoodDoor"
+          scope="prototype">
+    </bean>
+
+-->
+    <bean id="windowBean"
+          class="ru.specialist.springAnnotation.WoodFrameWindow">
+    </bean>
+
+    <!--
+    <bean id="brickBean"
+          class="ru.specialist.springAnnotation.Brick"
+          scope="prototype"
+          autowire-candidate="false"
+    >
+    </bean>
+    <bean id="woodBean"
+          class="ru.specialist.springAnnotation.Wood"
+          scope="prototype"
+          autowire-candidate="false"
+    >
+    </bean>
+
+    <bean id="keySelector" class="ru.specialist.springAnnotation.KeySelector"/>
+
+    <bean id="houseBean"
+          class="ru.specialist.springAnnotation.House"
+          p:height="4"  autowire="constructor">
+          -->
+<!--        <constructor-arg ref="windowBean"/>-->
+        <!-- <constructor-arg value="3"/>
+        <property name="height" value="5"/>-->
+<!--
+        <property name="wall" ref="brickBean"/>
+        -->
+        <!--        <property name="wall" >
+                   <bean class="ru.specialist.springAnnotation.Brick"/>
+               </property>-->
+<!--        <property name="doors">-->
+        <!--
+            <list>
+                <ref bean="outDoor"/>
+                <ref bean="innerDoor"/>
+            </list>
+         -->
+<!--
+            <map>
+                <entry key="#{keySelector.getKey(outDoor)?.toUpperCase()}" value-ref="outDoor"/>
+                <entry key="#{keySelector.getKey(innerDoor)}" value-ref="innerDoor"/>
+                <entry key="#{systemEnvironment['JAVA_HOME']}" value-ref="innerDoor"/>
+                <entry key="#{systemProperties['application.name']}" value-ref="innerDoor"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean id="houseBean2" class="ru.specialist.springAnnotation.House" parent="houseBean" />
+
+    <bean id="mainWindowBean"
+          class="ru.specialist.springAnnotation.MainWindow"
+          factory-method="getInstance"
+          init-method="openConnection">
+    </bean>
+
+
+
+    <util:list id="cities">
+        <bean class="ru.specialist.springAnnotation.City" p:name="Chicago" p:state="IL" p:population="2853114"/>
+        <bean class="ru.specialist.springAnnotation.City" p:name="Atlanta" p:state="GA" p:population="323"/>
+        <bean class="ru.specialist.springAnnotation.City" p:name="Dallas" p:state="TX" p:population="45234324"/>
+        <bean class="ru.specialist.springAnnotation.City" p:name="Houston" p:state="TX" p:population="53453d"/>
+        <bean class="ru.specialist.springAnnotation.City" p:name="Odessa" p:state="TX" p:population="623333"/>
+    </util:list>
+    -->
+<!-- Это не работает, потому что вне бина
+    <property name="chosenCity" value="#{cities[2]}"/>
+    <property name="chosenCity" value="#{cities[T(java.lang.Math).random()*cities.size()]}"/>
+    <property name="chosenCity" value="#{cities['Dallas']}"/> Это если бы было map выше
+    -->
+<!--
+    <property name="bigCities" value="#{cities.?[population gt 100000]}"/>
+    <property name="firstBigCity" value="#{cities.^[population gt 100000]}"/>
+    <property name="lastBigCity" value="#{cities.$[population gt 100000]}"/>
+    <property name="cityNames" value="#{cities.![name]}"/>
+    <property name="cityNames" value="#{cities.![name + ', ' + state]}"/>
+    <property name="cityNames" value="#{cities.?[population gt 100000].![name + ', ' + state]}"/>
+
+    -->
+
+<!--    <util:properties id="jdbcSettings" location="classpath:jdbc.properties"/>-->
+
+
+</beans>
