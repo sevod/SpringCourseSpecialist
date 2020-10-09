@@ -3,7 +3,8 @@
 2. SpringHello
 3. SpringDIXML (Spring project Dependence Injection (DI) на xml)
 4. SpringDIAnnotation (Spring project Dependence Injection (DI) на анотациях)
-
+5. SpringDIJava (Spring project Dependence Injection (DI) на классах Java)
+6. dbJDBC
 
 Виды scope: 
 
