@@ -76,3 +76,24 @@ Commit 1
     courses = getJdbcTemplate().query(SQL_SELECT_COURSE, new BeanPropertyRowMapper(Course.class));
     
 6.5.3 Используем ранее наме написаный CourseRowMapper. Можно им пользоваться когда имена не совпадают.
+
+Commit 2
+---------------
+
+Будем использовать пул коннектов для сокращения накладных расходов. В spring'е нет, поэтому возьмем отдельно. В реальных програмах именно он используется.
+
+1.1 Устанавливаем пакет Commons DBCP
+
+1.2. Коментируем в applicationContext.xml бин  <bean id="webDataSource"
+
+1.3. Настройки конекшена перенесем в новый файл jdbc.properties.
+
+1.4. Что бы это все было доступно в спринге добавим тег 
+
+    <context:property-placeholder location="classpath:/jdbc.properties" />
+
+1.5. Вместо закоментированного бина создаем новый, но с другим классом. 
+Бин настраваем как и предыдущий, но с учетом наличия файла настроек. Остальное остается без изменения.
+
+    class="org.apache.commons.dbcp.BasicDataSource"
+    

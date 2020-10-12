@@ -19,6 +19,5 @@ public class App {
             System.out.println(course);
         }
         context.close();
-
     }
 }

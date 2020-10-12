@@ -13,29 +13,36 @@
 
     <!--          SingleConnectionDataSource Синглтон соединение
          DriverManagerDataSource Всегда новое соединение-->
+    <!--
+        <bean id="webDataSource"
+              class="org.springframework.jdbc.datasource.DriverManagerDataSource" >
+              -->
+    <!--        тут имя драйвера, берется из док., мы его подключали Maven-->
+    <!--        <property name="driverClassName" value="com.mysql.cj.jdbc.Driver" />-->
+    <!--        адрес подключения и наша база-->
+    <!--
+            <property name="url" value="jdbc:mysql://localhost:3306/web" />
+            <property name="username" value="spec" />
+            <property name="password" value="Spec123456" />
+        </bean>
+        -->
     <bean id="webDataSource"
-          class="org.springframework.jdbc.datasource.DriverManagerDataSource" >
-<!--        тут имя драйвера, берется из док., мы его подключали Maven-->
-        <property name="driverClassName" value="com.mysql.cj.jdbc.Driver" />
-<!--        адрес подключения и наша база-->
-        <property name="url" value="jdbc:mysql://localhost:3306/web" />
-        
-        <property name="username" value="spec" />
-        <property name="password" value="Spec123456" />
+          class="org.apache.commons.dbcp.BasicDataSource"
+          destroy-method="close"
+          p:driverClassName="${jdbc.driverClassName}"
+          p:url="${jdbc.url}"
+          p:username="${jdbc.username}"
+          p:password="${jdbc.password}" />
 
-
-    </bean>
+    <context:property-placeholder location="classpath:/jdbc.properties"/>
 
     <bean id="jdbcTemplate"
           class="org.springframework.jdbc.core.JdbcTemplate">
-        <constructor-arg ref="webDataSource" />
+        <constructor-arg ref="webDataSource"/>
     </bean>
 
     <bean id="courseDao"
           class="ru.specialist.DAO.JdbcCourseDAO">
-        <property name="jdbcTemplate" ref="jdbcTemplate" />
+        <property name="jdbcTemplate" ref="jdbcTemplate"/>
     </bean>
-
-
-
 </beans>
