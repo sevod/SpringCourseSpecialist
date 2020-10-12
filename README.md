@@ -5,6 +5,7 @@
 4. SpringDIAnnotation (Spring project Dependence Injection (DI) на анотациях)
 5. SpringDIJava (Spring project Dependence Injection (DI) на классах Java)
 6. dbJDBC
+7. dbHibernate
 
 Виды scope: 
 
@@ -17,3 +18,13 @@
 -request (для http для одного запроса)
 
 -global-session (глобальный http контекст)
+
+hibernate одна из реализаций ORM - обьектно реализационных отображений.
+
+hibernate можно использовать напрямую, а можно как имплиментацию JPA
+
+entity - сущность
+
+HQL обьектный язык запросов
+
+Для работы с гиберней используем интерфейс сесий (Session) который получается через фабрику сесий (SessionFactory) которую мы сконфигурируем как компаненту спринга

@@ -32,7 +32,7 @@
           p:driverClassName="${jdbc.driverClassName}"
           p:url="${jdbc.url}"
           p:username="${jdbc.username}"
-          p:password="${jdbc.password}" />
+          p:password="${jdbc.password}"/>
 
     <context:property-placeholder location="classpath:/jdbc.properties"/>
 
