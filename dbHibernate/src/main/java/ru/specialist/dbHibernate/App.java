@@ -12,11 +12,24 @@ public class App {
 
         System.out.println(courseDAO.findById(5));
 
-        List<Course> courses = courseDAO.findAll();
 
-        for (Course course: courses) {
+
+        for (Course course: courseDAO.findByTitle("web")) {
             System.out.println(course);
         }
+
+
+//        Course spring = new Course();
+//        spring.setTitle("Spring");
+//        spring.setDescription("Spring framework and Spring MVC");
+//        courseDAO.insert(spring);
+
+        // courseDAO.delete(8);
+
+        for (Course course: courseDAO.findAll()) {
+            System.out.println(course);
+        }
+
         context.close();
     }
 }

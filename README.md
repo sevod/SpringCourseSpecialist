@@ -6,6 +6,7 @@
 5. SpringDIJava (Spring project Dependence Injection (DI) на классах Java)
 6. dbJDBC
 7. dbHibernate
+8. dbJPA
 
 Виды scope: 
 
@@ -28,3 +29,9 @@ entity - сущность
 HQL обьектный язык запросов
 
 Для работы с гиберней используем интерфейс сесий (Session) который получается через фабрику сесий (SessionFactory) которую мы сконфигурируем как компаненту спринга
+
+JPA - java persistence API. Стандартный интерфейс для реализации API различных ORM
+
+JPA поддерживает PersistenceContext, EntityManager, JPQL (Java Persistence QUERY Language)
+
+Spring поддерживает JPA для разных поставщиков JPA

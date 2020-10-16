@@ -136,9 +136,50 @@
 
 11. В классе Course.java все анотации, перевесил на пременные. Были над методами.           
     
-      
     
-               
+Commit 2
+-----------
+
+1. Реализуем еще 4 метода из интерфейса CourseDAO.java
+
+1.1. Раскоментируем их.
+
+1.2. Имплементируем их в HibernateCourseDAO.
+
+1.3. реализуем метод insert.
+
+        public void insert(Course course) {
+            getSessionFactory().getCurrentSession().save(course);
+        }
+        
+1.4. Аналогично делаем update
+
+    getSessionFactory().getCurrentSession().update(course);        
     
+1.5. Для метода delete требуется обьект, по id на прямую нельзя.    
+
+    Course course = new Course();
+    course.setId(id);
+    getSessionFactory().getCurrentSession().delete(course);
+    
+1.6 для findByTitle
+
+    return getSessionFactory().getCurrentSession().
+                    createQuery("from Course c were title LIKE :title").
+                    setString("title", "%" + title.trim() + "%").
+                    list();        
+                    
+1.7. реализуем все этим метода в App и проверим
+
+1.7.1. Проверяем findByTitle
+
+1.7.2. Создадим новый обьект курс в App и поместим его в sql.
+            
+        Course spring = new Course();
+        spring.setTitle("Spring");
+        spring.setDescription("Spring framework and Spring MVC");
+        courseDAO.insert(spring);     
         
-        
+1.7.3. Удаляем курс
+
+            courseDAO.delete(8);        

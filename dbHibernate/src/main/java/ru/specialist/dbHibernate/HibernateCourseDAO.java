@@ -35,4 +35,29 @@ public class HibernateCourseDAO implements CourseDAO {
     public List<Course> findAll() {
         return getSessionFactory().getCurrentSession().createQuery("from Course c").list();
     }
+
+    public List findByTitle(String title) {
+        return getSessionFactory().getCurrentSession().
+                createQuery("from Course c where title LIKE :title").
+                setString("title", "%" + title.trim() + "%").
+                list();
+    }
+
+    public void insert(Course course) {
+        getSessionFactory().getCurrentSession().save(course);
+        LOG.info("Course saved with id: " + course.getId());
+    }
+
+    public void update(Course course) {
+        getSessionFactory().getCurrentSession().update(course);
+        LOG.info("Course update with id: " + course.getId());
+    }
+
+    public void delete(int id) {
+        Course course = new Course();
+        course.setId(id);
+        getSessionFactory().getCurrentSession().delete(course);
+        LOG.info("Course deleted with id: " + id);
+
+    }
 }
