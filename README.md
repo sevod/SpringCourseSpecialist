@@ -6,7 +6,8 @@
 5. SpringDIJava (Spring project Dependence Injection (DI) на классах Java)
 6. dbJDBC
 7. dbHibernate
-8. dbJPA
+8. dbJPA 
+9. dbSpringData
 
 Виды scope: 
 
