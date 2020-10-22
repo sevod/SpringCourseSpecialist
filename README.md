@@ -8,6 +8,7 @@
 7. dbHibernate (ORM)
 8. dbJPA  (добавляем абстракцию между spring и Hibernate для стандартизации кода и не зависимости от реализации ORM)
 9. dbSpringData (Spring Data)
+10. WebTest (Servlet, JSP)
 
 Виды scope: 
 
