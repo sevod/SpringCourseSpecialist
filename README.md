@@ -9,6 +9,10 @@
 8. dbJPA  (добавляем абстракцию между spring и Hibernate для стандартизации кода и не зависимости от реализации ORM)
 9. dbSpringData (Spring Data)
 10. WebTest (Servlet, JSP)
+11. WebMVC
+
+
+В БД вылезла ошбика связанная с временными зонами. Решил set global time_zone = '-2:00'; в sql. Возможно правильнее было переписать бин.
 
 Виды scope: 
 
