@@ -22,9 +22,12 @@
 					<td>${course.title}</td>
 					<td>${course.length}</td>
 					<td>${course.description}</td>
+					<td><a href="update/${course.id}">Изменить</a></td>
+                    <td><a href="delete/${course.id}">Удалить</a></td>
 				</tr>
 			</c:forEach>
 		</table>
 	</c:if>
+	<a href="update/0">Добавить...</a>
 </body>
 </html>

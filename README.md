@@ -12,6 +12,13 @@
 11. WebMVC
 
 
+"Виды" spring
+
+Spring Core
+Spring Data
+Spring MVC
+JSP
+
 В БД вылезла ошбика связанная с временными зонами. Решил set global time_zone = '-2:00'; в sql. Возможно правильнее было переписать бин.
 
 Виды scope: 

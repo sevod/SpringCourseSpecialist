@@ -153,8 +153,69 @@ Model -  туда мы в контроллере занесем данные, к
 
 9.2. Заполнил копи пастом.
 
-3.35.00      
+Commit 2
+--------------------
+
+Реализуем операцию удаления. Отработаем получение дополнительных данных в контролер из запроса.
+
+1. Добавим в CourseController.java метод delete. 
+```
+       @RequestMapping(value = "delete/{id}", method = RequestMethod.GET )
+        public String delete(@PathVariable("id") int id, Model uiModel){
+            courseService.delete(id);
+            return "redirect:/courses";
+        }
+```    
+
+через строку `value = "delete/{id}"` мы получим дзначение из запроса. 
+
+А с помощью `@PathVariable("id")` мы передадим его в код.
+
+Вот так выглядит запрос на удаление из браузера `http://localhost:8080/WebMVC/courses/delete/2`
+
+А это редирект на страницу `courses` `return "redirect:/courses";`
+
+
+2. Отработаем редактирование/добавление новой строки.
+
+2.1. Для этого делаются два экшена. Первый отображает форму (метод get), а другой реальное удаление (post)
+
+2.2. Делаем get. Все аналогично предыдущим методам.
+
+    @RequestMapping(value = "update/{id}", method = RequestMethod.GET )
+    public String updateForm(@PathVariable("id") int id, Model uiModel){
+        uiModel.addAttribute("course", courseService.findById(id));
+        return "courses/edit";
+    }   
     
-        
+2.2.1. Создаем edit.jsp страницу (копи паст)
+
+2.3. Добавим такую же форму, но без id
+
+    @RequestMapping(value = "update", method = RequestMethod.GET )
+    public String updateForm(Model uiModel){
+        return "courses/edit";
+    }
     
+2.4. Создаем метод POST для отправки данных на сервер. Названия сделаны так, что бы само подцепилось.
+
+    @RequestMapping(value = "update/{id}", method = RequestMethod.POST )
+    public String update(Course course, BindingResult bindingResult, Model uiModel){
+        if (bindingResult.hasErrors()) {
+            //bindingResult.getAllErrors() если нужно найти ошибки.
+            uiModel.addAttribute("course", course);
+            return "courses/update";
+        }
+        courseService.save(course);
+        return "redirect:/courses/";
+    }   
     
+3. Создадим метод newForm, для добавления новых курсов. И добавим кнопки на форму lest.jsp
+```
+    @RequestMapping(value = "update/0", method = RequestMethod.GET )
+    public String newForm(Model uiModel){
+        return "courses/edit";
+    }             
+```
+    
+   
