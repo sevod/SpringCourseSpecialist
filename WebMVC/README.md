@@ -219,3 +219,108 @@ Commit 2
 ```
     
    
+Commit 3. Spring Security
+-----------------------------
+
+Будем делать разграничение доступа.
+
+Аутентификация и авторизация. В спринге включается в фильтры. В файл web.xml. 
+
+Будем создавать форму аутентификации, контроллер.
+На формах к которым будем делать доступ, нужно будет поменять JSP разметку.
+Акшен контроллерах, что бы пользователь на прямую не попал туда.
+
+Будет аутентификейшен провайдер, который будет отвечать за хранение паролей. Бывают разные.
+
+1. Подключаем модули через Maven
+
+1.1. spring security core основной модуль.
+
+1.2. Spring Security Web мобуль который будет содрежать наш фильтр.
+
+1.3. Spring Security Config что бы мы могли все конфигурировать в конфигурациооных файлах.
+
+1.4. Spring Security Taglibs что бы мы могли на JSP использовать дополнительную библиотеку тегов для связи с спринг секюрити.
+
+2. Правим web.xml
+
+2.1. Добавляем фильтр `springSecurityFilterChain` 
+
+    <filter>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+    </filter>   
+    
+2.2. Подключаем filter-mapping. В самом фильтре мы еще сможем сконфигурировать, что закрыто и открыто. Эта настройка просто "на что распространяется".
+
+    <filter-mapping>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>    
+
+3. Создаем конфигурационный файл для Spring Security. `security-context.xml`. Потом его подключим.
+
+3.1. Подключем Spring expression langwitch. Можно использовать в JSP так и в анотациях. По умолчанию доступ разрешаем всем.
+Так же добавляем странцу логина, страницу куда редиректи при ошибке, страницу куда редиректи при правильном логине. 
+И логаут страницу, куда попадет разлогинившийся пользователь.
+
+    <s:http use-expressions="true">
+        <s:intercept-url pattern="/*" access = "permitAll"/>
+       <s:form-login login-page="/courses/"
+            authentication-failure-url="/security/loginfail"
+            default-target-url="/courses/"/>
+        />
+        <s:logout logout-success-url="/courses/" />
+    </s:http>
+    
+3.2.  Аутентификейшен менеджер. Будет хранить логины, пароли, роли. Вместо `authentication-provider` возможно применять другие провайдеры.
+
+        <s:authentication-manager>
+            <s:authentication-provider>
+                <s:user-service>
+                    <s:user name="user" password="user" authorities="ROLE_USER" />
+                </s:user-service>
+            </s:authentication-provider>
+        </s:authentication-manager>
+        
+`<s:user name="user" password="user" authorities="ROLE_USER" />`    Имя пользователя, пароль, роль.
+
+3.3. Подключем созданный файл к корневой конфигурации вэб апликейшен контекст root-context.xml
+
+    <import resource="../../META-INF/spring/security-context.xml" />
+    
+4. Применим роли на страницу list.jsp.
+
+4.1. Добавим taglib библиотеку (библиотека тэгов)
+
+    <%@ taglib prefix="s" uri="http://springframework.org/security/tags"%>
+    
+4.2. Если пользователь авторизован срабоатет условие `<s:authorize access="isAuthenticated()">` 
+и можем получить имя пользователя `<s:authentication property="principal.username" />`
+`<a href="../j_spring_security_logout">Выход</a>` это обработчик, который нам добавил фильтр и мы можем его использовать.
+
+		<s:authorize access="isAuthenticated()">
+		    Привет, <s:authentication property="principal.username" />!
+			<br/>
+			<a href="../j_spring_security_logout">Выход</a>
+		</s:authorize>    
+		
+4.3. Если пользователь не авторизован, сработает другое условие `<s:authorize access="isAnonymous()">`
+Внутри него html форма и атрибут `action="../j_spring_security_check"` который использует готовый обработчик.
+
+Для логина используем импут с определенным именем `<input type="text" name="j_username">`
+
+Для паспорта так же `<input type="password" name="j_password">`
+
+	<s:authorize access="isAnonymous()">
+    		<form id="login" name="loginForm" action="../j_spring_security_check"
+    			method="POST">
+    			<label>Логин: </label>&nbsp;
+    			<input type="text" name="j_username">
+    			<label>Пароль: </label>&nbsp;
+    			<input type="password" name="j_password">
+    			<input type="submit" name="submit" value="Войти">
+    		</form>
+    </s:authorize>		
+    
+То что мы используем форму для логина задано в файле `security-context.xml`    `<s:form-login login-page="/courses/" ...` 
