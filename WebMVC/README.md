@@ -232,7 +232,7 @@ Commit 3. Spring Security
 
 Будет аутентификейшен провайдер, который будет отвечать за хранение паролей. Бывают разные.
 
-1. Подключаем модули через Maven
+1. Подключаем модули через Maven (с самыми последними не смог запустить, какие то особенности не учтены)
 
 1.1. spring security core основной модуль.
 
@@ -323,4 +323,14 @@ Commit 3. Spring Security
     		</form>
     </s:authorize>		
     
-То что мы используем форму для логина задано в файле `security-context.xml`    `<s:form-login login-page="/courses/" ...` 
+То что мы используем форму для логина задано в файле `security-context.xml`    `<s:form-login login-page="/courses/" ...`
+
+5. Защитим наши экшен контроллеры от прямого запроса не авторизованных пользователей.
+
+5.1 В файле `servlet-context.xml` добавляем дополнительные нэймспейсы для spring security и
+
+    <s:global-method-security pre-post-annotations="enabled"/>
+    
+5.2. В контроллере `CourseController.java` добавляем анотации. Этот метод будет доступен только тем, у кого есть данная роль.
+
+    @PreAuthorize("hasRole('ROLE_USER')")   

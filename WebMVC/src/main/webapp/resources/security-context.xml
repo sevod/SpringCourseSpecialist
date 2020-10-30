@@ -11,14 +11,13 @@
         <s:intercept-url pattern="/*" access="permitAll"/>
         <s:form-login login-page="/courses/"
                       authentication-failure-url="/security/loginfail"
-                      default-target-url="/"/>
+                      default-target-url="/courses/"/>
         <s:logout logout-success-url="/courses/"/>
     </s:http>
     <s:authentication-manager>
         <s:authentication-provider>
             <s:user-service>
                 <s:user name="user" password="user" authorities="ROLE_USER"/>
-                <s:user name="admin" password="admin" authorities="ROLE_ADMIN"/>
             </s:user-service>
         </s:authentication-provider>
     </s:authentication-manager>
