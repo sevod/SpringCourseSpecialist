@@ -383,4 +383,11 @@ Commit 4. RESTFul Service
     
 Сохраняем проверяем, все работает
 http://localhost:8080/WebMVC/api/course
-http://localhost:8080/WebMVC/api/course/3    
+http://localhost:8080/WebMVC/api/course/3     
+
+Commit 5 Добавляем Angular
+---------------------------
+
+В папку resources копируем два файла customers.html и angular.min.js и все работает. Этот путь был прописан в файле servlet-context.xml.
+
+http://localhost:8080/WebMVC/resources/customers.html
