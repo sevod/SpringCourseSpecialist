@@ -9,7 +9,7 @@
 8. dbJPA  (добавляем абстракцию между spring и Hibernate для стандартизации кода и не зависимости от реализации ORM)
 9. dbSpringData (Spring Data)
 10. WebTest (Servlet, JSP)
-11. WebMVC
+11. WebMVC ( + Spring Security, RESTFul Service)
 
 
 "Виды" spring
@@ -145,7 +145,5 @@ DispatcherServlet - главный сервлет в SpringMVC который п
 
 web.xml - это диплоймент дискриптор. С помощью него можно связать сервлет с контейнером. Или другой вариант анотации.
     
-    	
-
 
 

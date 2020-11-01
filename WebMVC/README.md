@@ -334,3 +334,53 @@ Commit 3. Spring Security
 5.2. В контроллере `CourseController.java` добавляем анотации. Этот метод будет доступен только тем, у кого есть данная роль.
 
     @PreAuthorize("hasRole('ROLE_USER')")   
+    
+Commit 4. RESTFul Service     
+---------------------------------
+
+1. Добавляем библиотеки. В мэйвен.
+
+1.1. Spring Object/XML Marshalling `spring-oxm` хоть и будем сериализовать в JSON без этого не работает
+
+1.2. Jackson Databind `jackson-databind` будем использовать его для серилизации в JSON.
+
+1.3. Data Mapper For Jackson Возможно уже не нужен и входит в предыдущий пакет.
+
+2. Сервлет будем использовать тот же самый `servlet-context.xml`
+
+2.1. Внтри тега `<mvc:annotation-driven>` будем делать коллекцию мессаж конвертерс. 
+В нем будут конверторы которые мы собиремся использовать. (JSON конвертер)
+
+    <mvc:annotation-driven>
+        <mvc:message-converters>
+            <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+    
+3. Создаем новый контроллер. CourseApiController.java. И навешиваем на него анотоции.
+
+3.1. Создаем методы для получения данных. И на них навешиваем анотации `@ResponseBody` означает что ответ будет в формате...
+
+    @RequestMapping(method = RequestMethod.GET)
+    @ResponseBody    
+    
+3.2. Если данные приходят из запроса (id) делаем две анотации    
+    
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public Course findById(@PathVariable int id){
+        return courseService.findById(id);
+    }    
+    
+3.3. Для создания новой сущности. 
+`@RequestBody Course course` означает что к нам на сервер придет обьект в JSON формате и его нужно десериализовать в обьект.
+
+    @RequestMapping(value = "/", method = RequestMethod.POST)
+    @ResponseBody
+    public Course create(@RequestBody Course course){
+        return courseService.save(course);
+    }
+    
+Сохраняем проверяем, все работает
+http://localhost:8080/WebMVC/api/course
+http://localhost:8080/WebMVC/api/course/3    
